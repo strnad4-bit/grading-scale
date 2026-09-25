@@ -1,66 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Grading scale calculator</title>
+<meta name="color-scheme" content="light">
+<title>Bodová stupnice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
 <style>
 :root{
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
 
-  --paper:#FBFAF6;
-  --panel:#FFFFFF;
+  --paper:#FFFFFF;
   --ink:#1B1A17;
   --muted:#6C665D;
-  --rule:#DAD6CC;
-  --field:#FFFFFF;
-  --field-line:#BFB9AD;
-  --grid:#E2E7EC;
+  --rule:#E0DCD3;
+  --field-line:#C3BDB1;
+  --grid:#EDF0F3;
   --mark:#A8271C;
-  --mark-soft:rgba(168,39,28,.07);
+  --mark-soft:rgba(168,39,28,.06);
   --warn-bg:#FBF1D9;
   --warn-line:#D9B94F;
   --warn-ink:#5C4608;
   --focus:#2F6FB0;
-}
-:root:not([data-theme="light"]){
-  @media (prefers-color-scheme: dark){
-    --paper:#141618;
-    --panel:#1A1D20;
-    --ink:#E9E6E0;
-    --muted:#9C978E;
-    --rule:#2D3236;
-    --field:#212528;
-    --field-line:#3C4247;
-    --grid:#242A2F;
-    --mark:#EE7F70;
-    --mark-soft:rgba(238,127,112,.10);
-    --warn-bg:#2C2617;
-    --warn-line:#6B5A22;
-    --warn-ink:#E4D2A0;
-    --focus:#79B2E8;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#141618;
-  --panel:#1A1D20;
-  --ink:#E9E6E0;
-  --muted:#9C978E;
-  --rule:#2D3236;
-  --field:#212528;
-  --field-line:#3C4247;
-  --grid:#242A2F;
-  --mark:#EE7F70;
-  --mark-soft:rgba(238,127,112,.10);
-  --warn-bg:#2C2617;
-  --warn-line:#6B5A22;
-  --warn-ink:#E4D2A0;
-  --focus:#79B2E8;
 }
 *,*::before,*::after{box-sizing:inherit}
 
@@ -70,296 +36,195 @@ body{
   color:var(--ink);
   font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   font-size:16px;
-  line-height:1.55;
+  line-height:1.5;
   -webkit-text-size-adjust:100%;
 }
-.wrap{max-width:1040px;margin:0 auto;padding:28px 20px 72px}
+.wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px}
 
-header.top{border-bottom:1px solid var(--rule);padding-bottom:18px;margin-bottom:26px}
 h1{
   font-family:"Source Serif 4",Georgia,"Times New Roman",serif;
   font-weight:600;
-  font-size:clamp(1.6rem,4.2vw,2.15rem);
-  line-height:1.15;
-  margin:0 0 6px;
+  font-size:1.5rem;
+  line-height:1.2;
+  margin:0 0 18px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
   letter-spacing:-.01em;
 }
-.sub{color:var(--muted);margin:0;max-width:62ch;font-size:.95rem}
-
-.layout{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:34px;align-items:start}
-@media (max-width:820px){.layout{grid-template-columns:1fr;gap:28px}}
-
 h2{
   font-family:"Source Serif 4",Georgia,serif;
   font-weight:600;
-  font-size:1.05rem;
-  margin:0 0 14px;
+  font-size:.98rem;
+  margin:22px 0 10px;
 }
-.controls section+section{margin-top:26px;padding-top:22px;border-top:1px solid var(--rule)}
 
-label{display:block;font-size:.88rem;color:var(--muted);margin-bottom:5px}
+label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
 input[type=number],select{
   width:100%;
   font:inherit;
   color:var(--ink);
-  background:var(--field);
+  background:#fff;
   border:1px solid var(--field-line);
   border-radius:3px;
-  padding:8px 10px;
+  padding:9px 10px;
 }
 input[type=number]{font-variant-numeric:tabular-nums}
-input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.field+.field{margin-top:14px}
+input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.field+.field{margin-top:12px}
 
-.bands{display:flex;flex-direction:column;gap:9px;margin-top:4px}
-.band{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+.bands{display:flex;flex-direction:column;gap:7px}
+.band{display:flex;align-items:center;gap:12px}
 .band .num{
   font-family:"Source Serif 4",Georgia,serif;
-  font-size:1.35rem;
-  width:1.5em;
+  font-size:1.3rem;
+  width:1.2em;
   text-align:center;
   color:var(--mark);
+  flex:none;
 }
-.band input[type=text]{
-  font:inherit;font-size:.9rem;color:var(--ink);
-  background:transparent;border:0;border-bottom:1px dotted var(--field-line);
-  padding:4px 2px;width:100%;
-}
-.band .pct{display:flex;align-items:baseline;gap:4px}
-.band .pct input{width:74px;text-align:right}
+.band .line{flex:1;border-bottom:1px dotted var(--rule)}
+.band .pct{display:flex;align-items:center;gap:5px;flex:none}
+.band .pct input{width:82px;text-align:right}
 .band .pct span{font-size:.85rem;color:var(--muted)}
-.band.last{color:var(--muted)}
-.band.last .rest{font-size:.85rem;color:var(--muted)}
+.band.last .rest{font-size:.85rem;color:var(--muted);flex:none}
 
-.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-button{
-  font:inherit;font-size:.88rem;
-  background:var(--panel);color:var(--ink);
-  border:1px solid var(--field-line);border-radius:3px;
-  padding:7px 13px;cursor:pointer;
+.reset{
+  font:inherit;font-size:.82rem;color:var(--muted);
+  background:none;border:0;padding:8px 0 0;cursor:pointer;text-decoration:underline;
 }
-button:hover{border-color:var(--ink)}
+.reset:hover{color:var(--ink)}
 
 .sheet{
-  background:var(--panel);
+  margin-top:22px;
   border:1px solid var(--rule);
   border-radius:4px;
   background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
   background-size:26px 26px;
   background-position:-1px -1px;
-  padding:22px 20px;
-  overflow-x:auto;
+  padding:14px 14px 6px;
 }
-table{border-collapse:collapse;width:100%;min-width:430px;background:transparent}
+table{border-collapse:collapse;width:100%}
 th{
-  text-align:left;font-weight:500;font-size:.78rem;color:var(--muted);
-  padding:0 12px 9px 0;border-bottom:1px solid var(--rule);
+  text-align:left;font-weight:500;font-size:.75rem;color:var(--muted);
+  padding:0 8px 8px 0;border-bottom:1px solid var(--rule);
 }
 th.r,td.r{text-align:right;padding-right:0}
-td{padding:13px 12px 13px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
+td{padding:11px 8px 11px 0;border-bottom:1px solid var(--rule);vertical-align:baseline}
 tbody tr:last-child td{border-bottom:0}
 .g{
   font-family:"Source Serif 4",Georgia,serif;
-  font-size:1.75rem;line-height:1;color:var(--mark);
-  width:1.6em;
+  font-size:1.6rem;line-height:1;color:var(--mark);width:1.4em;
 }
-.gname{font-size:.95rem}
 .points{
   font-family:"Source Serif 4",Georgia,serif;
-  font-size:1.2rem;font-variant-numeric:tabular-nums;white-space:nowrap;
+  font-size:1.15rem;font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-.pctcell{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
-tr.dead .g,tr.dead .points{color:var(--muted)}
+.pctcell{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;width:4.6em}
 tr.dead{background:var(--mark-soft)}
+tr.dead .g,tr.dead .points{color:var(--muted)}
 
-.note{font-size:.85rem;color:var(--muted);margin:14px 2px 0;max-width:70ch}
 .warn{
   background:var(--warn-bg);border-left:3px solid var(--warn-line);color:var(--warn-ink);
-  padding:11px 14px;border-radius:0 3px 3px 0;font-size:.88rem;margin-top:16px;
+  padding:10px 12px;border-radius:0 3px 3px 0;font-size:.85rem;margin-top:14px;
 }
 .warn p{margin:0}
-.warn p+p{margin-top:6px}
+.warn p+p{margin-top:5px}
 
-.lookup{margin-top:30px;padding-top:24px;border-top:1px solid var(--rule)}
-.lookrow{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
-.lookrow .field{margin:0;width:150px}
-.verdict{font-family:"Source Serif 4",Georgia,serif;font-size:1.05rem;padding-bottom:6px}
-.verdict b{font-size:1.9rem;color:var(--mark);line-height:1;margin-right:.3em}
-
-details{margin-top:26px;border-top:1px solid var(--rule);padding-top:18px}
-summary{cursor:pointer;font-size:.9rem;color:var(--muted)}
-summary:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+details{margin-top:20px;border-top:1px solid var(--rule);padding-top:14px}
+summary{cursor:pointer;font-size:.86rem;color:var(--muted)}
 .alllist{
-  margin-top:14px;display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:2px 10px;
-  font-size:.86rem;font-variant-numeric:tabular-nums;
+  margin-top:12px;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:0 12px;
+  font-size:.85rem;font-variant-numeric:tabular-nums;
 }
-.alllist span{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px dotted var(--rule)}
+.alllist span{display:flex;justify-content:space-between;gap:6px;padding:3px 0;border-bottom:1px dotted var(--rule)}
 .alllist b{color:var(--mark);font-weight:600}
-
-footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--rule);font-size:.82rem;color:var(--muted);max-width:74ch}
-
-@media print{
-  :root{--paper:#fff;--panel:#fff;--ink:#000;--muted:#444;--grid:transparent;--mark:#000}
-  .controls .btnrow,.lookup,details,footer{display:none}
-  .layout{grid-template-columns:1fr}
-  .sheet{border:0;padding:0}
-}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="top">
-  <h1>Grading scale calculator</h1>
-  <p class="sub">Set the maximum points and the percentage floor for each grade. The table shows the point range for every grade, and flags any grade that has become impossible to reach.</p>
-</header>
+<h1>Bodová stupnice</h1>
 
-<div class="layout">
-
-  <div class="controls">
-    <section>
-      <h2>The test</h2>
-      <div class="field">
-        <label for="max">Maximum points</label>
-        <input type="number" id="max" value="25" min="0.25" step="0.25" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label for="step">Scores are awarded in steps of</label>
-        <select id="step">
-          <option value="1" selected>1 point</option>
-          <option value="0.5">half a point</option>
-          <option value="0.25">quarter point</option>
-        </select>
-      </div>
-    </section>
-
-    <section>
-      <h2>Grade floors</h2>
-      <div class="field">
-        <label for="preset">Preset</label>
-        <select id="preset">
-          <option value="90,75,60,40">Standard Czech (90 / 75 / 60 / 40)</option>
-          <option value="90,80,65,50">Strict (90 / 80 / 65 / 50)</option>
-          <option value="85,70,55,35">Lenient (85 / 70 / 55 / 35)</option>
-          <option value="80,60,40,20">Even fifths (80 / 60 / 40 / 20)</option>
-          <option value="custom">Custom</option>
-        </select>
-      </div>
-      <div class="bands" id="bands">
-        <div class="band">
-          <span class="num">1</span>
-          <input type="text" class="gl" value="výborně" aria-label="Name of grade 1">
-          <span class="pct"><input type="number" class="gp" data-i="0" value="90" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Floor for grade 1"><span>%</span></span>
-        </div>
-        <div class="band">
-          <span class="num">2</span>
-          <input type="text" class="gl" value="chvalitebně" aria-label="Name of grade 2">
-          <span class="pct"><input type="number" class="gp" data-i="1" value="75" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Floor for grade 2"><span>%</span></span>
-        </div>
-        <div class="band">
-          <span class="num">3</span>
-          <input type="text" class="gl" value="dobře" aria-label="Name of grade 3">
-          <span class="pct"><input type="number" class="gp" data-i="2" value="60" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Floor for grade 3"><span>%</span></span>
-        </div>
-        <div class="band">
-          <span class="num">4</span>
-          <input type="text" class="gl" value="dostatečně" aria-label="Name of grade 4">
-          <span class="pct"><input type="number" class="gp" data-i="3" value="40" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Floor for grade 4"><span>%</span></span>
-        </div>
-        <div class="band last">
-          <span class="num">5</span>
-          <input type="text" class="gl" value="nedostatečně" aria-label="Name of grade 5">
-          <span class="rest">everything below</span>
-        </div>
-      </div>
-      <div class="btnrow">
-        <button type="button" id="reset">Reset to standard</button>
-        <button type="button" id="print">Print the table</button>
-      </div>
-    </section>
-  </div>
-
-  <main>
-    <div class="sheet">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="2">Grade</th>
-            <th class="r">Points</th>
-            <th class="r">Reaches</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-
-    <p class="note" id="rule"></p>
-    <div id="warnings"></div>
-
-    <div class="lookup">
-      <h2>Check a single score</h2>
-      <div class="lookrow">
-        <div class="field">
-          <label for="score">Points scored</label>
-          <input type="number" id="score" min="0" step="0.5" inputmode="decimal" placeholder="e.g. 16">
-        </div>
-        <p class="verdict" id="verdict">Enter a score.</p>
-      </div>
-    </div>
-
-    <details>
-      <summary>Show every possible score</summary>
-      <div class="alllist" id="alllist"></div>
-    </details>
-  </main>
+<div class="field">
+  <label for="max">Maximum bodů</label>
+  <input type="number" id="max" value="25" min="0.25" step="0.25" inputmode="decimal">
+</div>
+<div class="field">
+  <label for="step">Body se udělují po</label>
+  <select id="step">
+    <option value="1" selected>1 bodu</option>
+    <option value="0.5">půl bodu</option>
+    <option value="0.25">čtvrt bodu</option>
+  </select>
 </div>
 
-<footer>
-  A score earns a grade when it reaches that grade's percentage floor exactly — nothing is rounded up to meet it. Percentage-of-maximum scales assume the test itself is calibrated: if a paper turns out harder than intended, the scale penalises the class rather than the paper, so it is worth glancing at the spread of results before the marks are final.
-</footer>
+<h2>Hranice známek</h2>
+<div class="bands">
+  <div class="band">
+    <span class="num">1</span><span class="line"></span>
+    <span class="pct"><input type="number" class="gp" value="90" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Hranice známky 1"><span>%</span></span>
+  </div>
+  <div class="band">
+    <span class="num">2</span><span class="line"></span>
+    <span class="pct"><input type="number" class="gp" value="75" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Hranice známky 2"><span>%</span></span>
+  </div>
+  <div class="band">
+    <span class="num">3</span><span class="line"></span>
+    <span class="pct"><input type="number" class="gp" value="60" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Hranice známky 3"><span>%</span></span>
+  </div>
+  <div class="band">
+    <span class="num">4</span><span class="line"></span>
+    <span class="pct"><input type="number" class="gp" value="40" min="0" max="100" step="0.5" inputmode="decimal" aria-label="Hranice známky 4"><span>%</span></span>
+  </div>
+  <div class="band last">
+    <span class="num">5</span><span class="line"></span>
+    <span class="rest">vše nižší</span>
+  </div>
+</div>
+<button type="button" class="reset" id="reset">Obnovit výchozí hodnoty</button>
+
+<div class="sheet">
+  <table>
+    <thead>
+      <tr><th>Známka</th><th class="r">Body</th><th class="r">Od</th></tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+</div>
+
+<div id="warnings"></div>
+
+<details>
+  <summary>Všechny možné bodové zisky</summary>
+  <div class="alllist" id="alllist"></div>
+</details>
 
 </div>
 
 <script>
 (function(){
   "use strict";
-  var KEY = "grading-scale-v1";
+  var KEY = "bodova-stupnice-v1";
   var EPS = 1e-9;
+  var DEF = {max:25, step:1, floors:[90,75,60,40]};
 
-  var el = {
-    max: document.getElementById("max"),
-    step: document.getElementById("step"),
-    preset: document.getElementById("preset"),
-    rows: document.getElementById("rows"),
-    rule: document.getElementById("rule"),
-    warnings: document.getElementById("warnings"),
-    score: document.getElementById("score"),
-    verdict: document.getElementById("verdict"),
-    alllist: document.getElementById("alllist"),
-    reset: document.getElementById("reset"),
-    print: document.getElementById("print")
-  };
+  var elMax = document.getElementById("max");
+  var elStep = document.getElementById("step");
+  var elRows = document.getElementById("rows");
+  var elWarn = document.getElementById("warnings");
+  var elList = document.getElementById("alllist");
+  var elReset = document.getElementById("reset");
   var pctInputs = Array.prototype.slice.call(document.querySelectorAll(".gp"));
-  var labelInputs = Array.prototype.slice.call(document.querySelectorAll(".gl"));
-  var DEFAULT_FLOORS = [90,75,60,40];
 
-  function num(v, fallback){
-    var n = parseFloat(v);
-    return isFinite(n) ? n : fallback;
-  }
-  function fmt(n){
-    var r = Math.round(n*100)/100;
-    return String(r);
-  }
-  function pctOf(points, max){ return max > 0 ? (points/max)*100 : 0; }
+  function num(v, f){ var n = parseFloat(v); return isFinite(n) ? n : f; }
+  function cz(n){ return String(Math.round(n*100)/100).replace(".", ","); }
+  function cz1(n){ return String(Math.round(n*10)/10).replace(".", ","); }
+  function pctOf(p, max){ return max > 0 ? (p/max)*100 : 0; }
 
-  // Every score a pupil can actually be given, highest first.
   function achievable(max, step){
-    var out = [];
-    var k = Math.floor(max/step + EPS);
-    if (k*step < max - EPS) out.push(max);      // odd maximum, not a multiple of the step
+    var out = [], k = Math.floor(max/step + EPS);
+    if (k*step < max - EPS) out.push(max);
     for (; k >= 0; k--) out.push(Math.round(k*step*10000)/10000);
     if (out.length > 6000) out = out.slice(0, 6000);
     return out;
@@ -367,169 +232,111 @@ footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--rule);font-si
 
   function gradeFor(points, max, floors){
     var p = pctOf(points, max);
-    for (var i = 0; i < floors.length; i++){
-      if (p >= floors[i] - EPS) return i+1;
-    }
+    for (var i = 0; i < floors.length; i++){ if (p >= floors[i] - EPS) return i+1; }
     return 5;
   }
 
-  function readState(){
-    var max = num(el.max.value, 0);
-    var step = num(el.step.value, 1);
-    var floors = pctInputs.map(function(inp){
-      return Math.min(100, Math.max(0, num(inp.value, 0)));
-    });
-    var labels = labelInputs.map(function(inp){ return inp.value.trim(); });
-    return {max:max, step:step, floors:floors, labels:labels};
+  function state(){
+    return {
+      max: num(elMax.value, 0),
+      step: num(elStep.value, 1),
+      floors: pctInputs.map(function(i){ return Math.min(100, Math.max(0, num(i.value, 0))); })
+    };
   }
 
-  function save(s){
-    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch(e){}
-  }
+  function save(s){ try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){} }
   function load(){
-    try {
+    try{
       var raw = localStorage.getItem(KEY);
-      if (!raw) return null;
+      if(!raw) return null;
       var s = JSON.parse(raw);
-      if (!s || typeof s !== "object") return null;
-      return s;
-    } catch(e){ return null; }
-  }
-
-  function syncPresetSelect(floors){
-    var joined = floors.join(",");
-    var found = false;
-    Array.prototype.forEach.call(el.preset.options, function(o){
-      if (o.value === joined){ el.preset.value = joined; found = true; }
-    });
-    if (!found) el.preset.value = "custom";
+      return (s && typeof s === "object") ? s : null;
+    }catch(e){ return null; }
   }
 
   function render(){
-    var s = readState();
-    var warnings = [];
+    var s = state(), warnings = [];
 
     if (!(s.max > 0)){
-      el.rows.innerHTML = '<tr><td colspan="4" class="pctcell">Enter a maximum above zero to build the scale.</td></tr>';
-      el.rule.textContent = "";
-      el.warnings.innerHTML = "";
-      el.alllist.innerHTML = "";
-      el.verdict.textContent = "Enter a score.";
+      elRows.innerHTML = '<tr><td colspan="3" class="pctcell">Zadejte maximum bodů.</td></tr>';
+      elWarn.innerHTML = "";
+      elList.innerHTML = "";
       return;
     }
 
-    // Floors must descend. Nothing else makes sense.
     for (var i = 1; i < s.floors.length; i++){
       if (s.floors[i] >= s.floors[i-1]){
-        warnings.push("The floor for grade " + (i+1) + " (" + fmt(s.floors[i]) + "%) is not below the floor for grade " + i + " (" + fmt(s.floors[i-1]) + "%). Grade " + i + " can never be given.");
+        warnings.push("Hranice známky " + (i+1) + " (" + cz(s.floors[i]) + " %) není nižší než hranice známky " + i + " (" + cz(s.floors[i-1]) + " %). Známku " + i + " nelze udělit.");
       }
     }
 
     var scores = achievable(s.max, s.step);
     var bands = [];
-    for (var g = 1; g <= 5; g++) bands.push({grade:g, label:s.labels[g-1] || "", hi:null, lo:null});
+    for (var g = 1; g <= 5; g++) bands.push({grade:g, hi:null, lo:null});
 
     scores.forEach(function(pt){
-      var g = gradeFor(pt, s.max, s.floors);
-      var b = bands[g-1];
+      var b = bands[gradeFor(pt, s.max, s.floors) - 1];
       if (b.hi === null) b.hi = pt;
       b.lo = pt;
     });
 
     var html = "";
     bands.forEach(function(b){
-      var dead = (b.hi === null);
-      if (dead) warnings.push("Grade " + b.grade + " cannot be awarded: no possible score falls inside it. Widen the band, or mark in smaller steps.");
-      var pts, reach;
+      var dead = (b.hi === null), pts, from;
       if (dead){
-        pts = "—";
-        reach = "no score fits";
+        warnings.push("Známku " + b.grade + " nelze udělit – nespadá do ní žádný možný počet bodů.");
+        pts = "—"; from = "";
       } else if (Math.abs(b.hi - b.lo) < EPS){
-        pts = fmt(b.lo);
-        reach = fmt(Math.round(pctOf(b.lo, s.max)*10)/10) + "%";
+        pts = cz(b.lo);
+        from = cz1(pctOf(b.lo, s.max)) + " %";
       } else {
-        pts = fmt(b.lo) + " – " + fmt(b.hi);
-        reach = fmt(Math.round(pctOf(b.lo, s.max)*10)/10) + "% at the floor";
+        pts = cz(b.lo) + " – " + cz(b.hi);
+        from = cz1(pctOf(b.lo, s.max)) + " %";
       }
       html += '<tr class="' + (dead ? "dead" : "") + '">'
             + '<td class="g">' + b.grade + '</td>'
-            + '<td class="gname">' + (b.label ? b.label.replace(/[<>&]/g, "") : "") + '</td>'
             + '<td class="r points">' + pts + '</td>'
-            + '<td class="r pctcell">' + reach + '</td>'
+            + '<td class="r pctcell">' + from + '</td>'
             + '</tr>';
     });
-    el.rows.innerHTML = html;
-
-    var stepWord = s.step === 1 ? "whole points" : (s.step === 0.5 ? "half points" : "quarter points");
-    el.rule.textContent = "Out of " + fmt(s.max) + " points, marked in " + stepWord + ". Each cutoff is the lowest score that genuinely reaches the percentage — a score one step below it takes the lower grade.";
+    elRows.innerHTML = html;
 
     if (s.max < 12 && s.step === 1){
-      warnings.push("On a " + fmt(s.max) + "-point test one point is worth " + fmt(Math.round((100/s.max)*10)/10) + "%, so the bands are very coarse. Half points, or a longer test, give the scale room to work.");
+      warnings.push("Jeden bod má hodnotu " + cz1(100/s.max) + " %, hranice jsou proto velmi hrubé.");
     }
 
-    el.warnings.innerHTML = warnings.length
+    elWarn.innerHTML = warnings.length
       ? '<div class="warn">' + warnings.map(function(w){ return "<p>" + w + "</p>"; }).join("") + "</div>"
       : "";
 
-    // Full list of scores, low to high.
-    var listHtml = "";
+    var list = "";
     for (var j = scores.length - 1; j >= 0; j--){
-      listHtml += "<span>" + fmt(scores[j]) + " <b>" + gradeFor(scores[j], s.max, s.floors) + "</b></span>";
+      list += "<span>" + cz(scores[j]) + " <b>" + gradeFor(scores[j], s.max, s.floors) + "</b></span>";
     }
-    el.alllist.innerHTML = listHtml;
+    elList.innerHTML = list;
 
-    el.score.max = s.max;
-    el.score.step = s.step;
-    lookup(s);
-    syncPresetSelect(s.floors);
     save(s);
   }
 
-  function lookup(s){
-    var raw = el.score.value;
-    if (raw === ""){ el.verdict.textContent = "Enter a score."; return; }
-    var pts = num(raw, NaN);
-    if (!isFinite(pts) || pts < 0){ el.verdict.textContent = "That is not a score."; return; }
-    if (pts > s.max + EPS){
-      el.verdict.textContent = "That is above the maximum of " + fmt(s.max) + ".";
-      return;
-    }
-    var g = gradeFor(pts, s.max, s.floors);
-    var label = s.labels[g-1] ? " " + s.labels[g-1] : "";
-    el.verdict.innerHTML = "<b>" + g + "</b>" + label + " — " + fmt(Math.round(pctOf(pts, s.max)*10)/10) + "%";
-  }
-
-  function applyFloors(arr){
-    pctInputs.forEach(function(inp, i){ inp.value = arr[i]; });
-  }
-
-  el.preset.addEventListener("change", function(){
-    if (el.preset.value === "custom") return;
-    applyFloors(el.preset.value.split(",").map(Number));
+  elReset.addEventListener("click", function(){
+    elMax.value = DEF.max;
+    elStep.value = String(DEF.step);
+    pctInputs.forEach(function(inp, i){ inp.value = DEF.floors[i]; });
     render();
   });
-  el.reset.addEventListener("click", function(){
-    el.max.value = 25;
-    el.step.value = "1";
-    applyFloors(DEFAULT_FLOORS);
-    render();
-  });
-  el.print.addEventListener("click", function(){ window.print(); });
 
-  [el.max, el.step].concat(pctInputs, labelInputs).forEach(function(inp){
+  [elMax, elStep].concat(pctInputs).forEach(function(inp){
     inp.addEventListener("input", render);
     inp.addEventListener("change", render);
   });
-  el.score.addEventListener("input", function(){ lookup(readState()); });
 
   var saved = load();
   if (saved){
-    if (isFinite(saved.max)) el.max.value = saved.max;
-    if (saved.step) el.step.value = String(saved.step);
-    if (Array.isArray(saved.floors) && saved.floors.length === 4) applyFloors(saved.floors);
-    if (Array.isArray(saved.labels)) labelInputs.forEach(function(inp,i){
-      if (typeof saved.labels[i] === "string") inp.value = saved.labels[i];
-    });
+    if (isFinite(saved.max)) elMax.value = saved.max;
+    if (saved.step) elStep.value = String(saved.step);
+    if (Array.isArray(saved.floors) && saved.floors.length === 4){
+      pctInputs.forEach(function(inp, i){ if (isFinite(saved.floors[i])) inp.value = saved.floors[i]; });
+    }
   }
   render();
 })();
